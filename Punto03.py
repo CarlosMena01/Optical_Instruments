@@ -14,3 +14,16 @@ def Lenses2F(image,landa,f,shift):
     result = (-1j/(landa*f))*(np.fft.fftn(image))
   return result
 
+def Complex_Plot(matrix,kind,log):
+  #kind: I=Intensidad, A=Amplitud, P=Fase
+  if (kind=='I'):
+    matrix_to_plot=np.abs(matrix)**2
+  elif (kind=='A'):
+    matrix_to_plot=np.abs(matrix)
+  elif (kind=='P'):
+     matrix_to_plot=np.angle(matrix)
+  if (log==1):
+    plt.imshow(np.log(matrix_to_plot))
+  elif (log==0):
+    plt.imshow(matrix_to_plot)
+  return 

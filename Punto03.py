@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import cv2
 
 #Función para calcular la formación de imgenes de una lente en el plano focal si el objeto está en el otro plano focal
-def Lenses2F(image,landa,f,shift):
+def Lenses2F(image,landa=1,f=1,shift=0):
   #image: Imagen que se ubica en el foco del plano objeto y pasará por la lente 
   #landa: Longitud de onda de la luente de luz que ingresa al sistema
   #f: distancia focal de la lente
@@ -49,7 +49,7 @@ def All_system(image,landa,f,kind):
   axs[0].set_title("Imagen inicial")
   Complex_Plot(Lenses2F(image,landa,f,1) ,kind,1,axs[1])
   axs[1].set_title("Primera lente escala log")
-  Complex_Plot(Lenses2F(Lenses2F(image,landa,f,1),landa,f,0) ,kind,0,axs[2])
+  Complex_Plot(Lenses4F(image,landa,f) ,kind,0,axs[2])
   axs[2].set_title("Imagen final")
   return
 
@@ -66,3 +66,4 @@ landa = 0.66*um
 f = 2*m
 
 All_system(image, landa, f, "A")
+plt.show()

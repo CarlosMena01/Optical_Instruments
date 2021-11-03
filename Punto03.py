@@ -32,6 +32,12 @@ def Complex_Plot(matrix,kind,log,axs):
     axs.imshow(matrix_to_plot)
   return 
 
+#Definimos el sistema 4F a partir de las funciones que ya teniamos definidas.
+def Lenses4F(image,landa,f):
+    Half01=Lenses2F(image,landa,f,1) #Usamos el método de dividir el sistema 4f en dos mitades.
+    Half02=Lenses2F(Half01,landa,f,0)
+    return Half02
+
 #Función para gráficar todo el sistema 4F
 def All_system(image,landa,f,kind):
   #image: Imagen que se ubica en el foco del plano objeto y pasará por la lente 

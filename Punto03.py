@@ -48,7 +48,7 @@ def All_system(image,landa,f,kind):
   Complex_Plot(image ,kind,0,axs[0])
   axs[0].set_title("Imagen inicial")
   Complex_Plot(Lenses2F(image,landa,f,1) ,kind,1,axs[1])
-  axs[1].set_title("Primera lente escala log")
+  axs[1].set_title("Plano Fourier")
   Complex_Plot(Lenses4F(image,landa,f) ,kind,0,axs[2])
   axs[2].set_title("Imagen final")
   return

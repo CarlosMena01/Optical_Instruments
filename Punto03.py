@@ -14,16 +14,7 @@ def Lenses2F(image,landa=1,f=1,shift=0):
   elif (shift==0):
     result = (-1j/(landa*f))*(np.fft.fftn(image))
   return result
-
-#Definimos el sistema 4F a partir de las funciones que ya teniamos definidas.
-def Lenses4F(image,landa,f):
-  #image: Imagen que se ubica en el foco del plano objeto y pasará por la lente 
-  #landa: Longitud de onda de la luente de luz que ingresa al sistema
-  #f: distancia focal de la lente
-  Half01=Lenses2F(image,landa,f,1) #Usamos el método de dividir el sistema 4f en dos mitades.
-  Half02=Lenses2F(Half01,landa,f,0)
-  return Half02
-
+  
 #Función para gráficar matrices complejas 
 def Complex_Plot(matrix,kind,log,axs):
   #matrix: matriz a gráficar
@@ -57,7 +48,7 @@ def All_system(image,landa,f,kind):
   Complex_Plot(image ,kind,0,axs[0])
   axs[0].set_title("Imagen inicial")
   Complex_Plot(Lenses2F(image,landa,f,1) ,kind,1,axs[1])
-  axs[1].set_title("Plano Fourier")
+  axs[1].set_title("Primera lente escala log")
   Complex_Plot(Lenses4F(image,landa,f) ,kind,0,axs[2])
   axs[2].set_title("Imagen final")
   return

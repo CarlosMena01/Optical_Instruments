@@ -77,3 +77,7 @@ for k in images:
     #plano imagen
     corr=np.fft.fftshift(np.fft.fftn(i_fft_img_joint))
     Complex_Plot(corr,'A',1,axs[1])
+
+    #Se toma la columna 10 pues allí se encuentra la imagen de interés
+    #En la segunda imagen impresa se pueden observar picos de correlación alejados del origen, lo que
+    #quiere decir que la pista está presente en la imagen de estudio.

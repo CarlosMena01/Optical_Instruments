@@ -42,6 +42,9 @@ fft_b=Lenses2F(b,landa=1,f=1,shift=1)
 mask=np.ones(np.shape(b),dtype="uint8")
 cv2.circle(mask,(396,367),5,0,-1)
 cv2.circle(mask,(372,401),5,0,-1)
+cv2.rectangle(mask,(395,374),(396,342),0,-1)
+cv2.rectangle(mask,(390,368),(396,365),0,-1)
+cv2.rectangle(mask,(368,403),(403,400),0,-1)
 
 #Se hace pasar la información del plano de Fourier por la segunda parte del sistema, aplicando el filtro
 b_filt=Lenses2F(fft_b*mask,landa=1,f=1,shift=0)

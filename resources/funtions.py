@@ -36,3 +36,16 @@ def Lenses4F(image,landa,f):
     Half01=Lenses2F(image,landa,f,1) #Usamos el método de dividir el sistema 4f en dos mitades.
     Half02=Lenses2F(Half01,landa,f,0)
     return Half02
+
+def OpenComplexMat(root):
+  file = open(root)
+  lines = file.readlines()
+
+  a = [] #Matriz final
+  for line in lines:
+    line = line.replace("i","j").split(",") #reemplaxamos i con j
+    aux = [] #Variable auxiliar 
+    for element in line:
+        aux.append(complex(element)) #convertimos a complejo
+    a.append(aux)
+  return np.array(a)

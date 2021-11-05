@@ -15,7 +15,7 @@ def Lenses2F(image,landa=1,f=1,shift=0):
   return result
   
 #Función para gráficar matrices complejas 
-def Complex_Plot(matrix,kind,log,axs):
+def Complex_Plot(matrix,kind,log,axs,fig = 0, colbar = False):
   #matrix: matriz a gráficar
   #kind: I=Intensidad, A=Amplitud, P=Fase
   #log: 1 si se desea escala logarítmica 0 en caso contrario
@@ -26,9 +26,11 @@ def Complex_Plot(matrix,kind,log,axs):
   elif (kind=='P'):
      matrix_to_plot=np.angle(matrix)
   if (log==1):
-    axs.imshow(np.log(matrix_to_plot + 0.0000001))
+    image = axs.imshow(np.log(matrix_to_plot + 0.0000001))
   elif (log==0):
-    axs.imshow(matrix_to_plot)
+    image = axs.imshow(matrix_to_plot)
+  if (colbar):
+    fig.colorbar(image, ax = axs)
   return 
 
 #Definimos el sistema 4F a partir de las funciones que ya teniamos definidas.

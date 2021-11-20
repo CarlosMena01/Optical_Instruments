@@ -31,3 +31,37 @@ def DFT(matrix, inverse=False):
         return F
     else:
         return np.fft.fftshift(F)
+
+""" Función de Difracción Discreta por Espectro Angular usando DFTs"""
+def Angular_Spectrum_DFT(matrix,z,w_length,dx):
+    # matrix es la representación discreta de la imagen o función 
+    # z es la distancia de propagación (metros)
+    # w_length es la longitud de onda (m)
+    # dx es el intervalo de muestreo de la función en el plano de entrada
+
+    #Se define la dimensión de la imagen (solo se utiliza N por ser cuadrada)
+    N=np.shape(matrix)[0]
+
+    #Se calcula el intervalo de muestreo en el dominio de las frecuancias
+    df=1/(dx*N)
+
+    #Se calcula la transformada de Fourier de la imagen o función
+    A_0=DFT(matrix)
+    A_0=(dx**2)*A_0
+
+    #Se definen las coordenadas frecuenciales con el fin de aplicar la función de transferencia
+    #adecuadamente
+    x=np.arange(-int(N/2),int(N/2),1)
+    y=np.arange(-int(N/2),int(N/2),1)
+    X,Y=np.meshgrid(x,y)
+    fX=X*(1/(N*dx))
+    fY=Y*(1/(N*dx))
+
+    #Se aplica la función de transferencia
+    A_z=A_0*np.exp(1j*z*(2*np.pi/w_length)*np.sqrt(1-(w_length**2)*(fX**2+fY**2)))      
+
+    #Se calcula la transformada inversa de Fourier de A_z y se retorna (U_z es la representación del
+    # camp óptico difractado a una distancia z) 
+    U_z=DFT(A_z,'i')
+    U_z=(df**2)*U_z
+    return U_z

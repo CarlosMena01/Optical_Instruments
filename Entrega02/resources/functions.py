@@ -3,8 +3,9 @@ import matplotlib.pyplot as plt
 import cv2
 
 #Definimos unidades
-um = 10**(-6)
-mm = 10**(-3)
+nm = 1e-9
+um = 1e-6
+mm = 1e-3
 m = 1
 
 #Función para gráficar matrices complejas 
@@ -25,9 +26,3 @@ def Complex_Plot(matrix,kind,log,axs,fig = 0, colbar = False):
   if (colbar):
     fig.colorbar(image, ax = axs)
   return 
-
-#Definimos el sistema 4F a partir de las funciones que ya teniamos definidas.
-def Lenses4F(image,landa,f):
-    Half01=Lenses2F(image,landa,f,1) #Usamos el método de dividir el sistema 4f en dos mitades.
-    Half02=Lenses2F(Half01,landa,f,0)
-    return Half02

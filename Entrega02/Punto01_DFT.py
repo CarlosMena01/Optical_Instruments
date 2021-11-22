@@ -12,6 +12,7 @@ coordx=int(np.shape(circ_aperture)[1]/2)
 cv2.circle(circ_aperture,(coordx,coordy),150,1,-1)
 
 #Se calcula el patrón de difracción por Espectro Angular
-U_circ=Angular_Spectrum_DFT(circ_aperture,250*mm,650*nm,1e-5)
+U_circ=Diffraction(circ_aperture,60*mm,650*nm,1e-5, type = "DFT")
 fig, axs = plt.subplots(1, 1, figsize=(10, 10))
 Complex_Plot(U_circ,'A',0,axs)
+plt.show()

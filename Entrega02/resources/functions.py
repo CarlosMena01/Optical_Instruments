@@ -136,10 +136,10 @@ def Angular_Spectrum_FFT(T, z, wave_length, dx):
     #z := Distancia a propagar
     #wave_length := longitud de onda
     
-    A_0 = (dx**2)*np.fft.fftshift(np.fft.fftn(T))
+    A_0 = (dx**2)*(np.fft.fftn(T))
     
     N,M = np.shape(T)
-    #print("M: ",M, "N: ", N)
+
     x = np.arange(-int(M/2),int(M/2),1)
     y = np.arange(-int(N/2),int(N/2),1)
     X,Y = np.meshgrid(x,y)
@@ -153,7 +153,7 @@ def Angular_Spectrum_FFT(T, z, wave_length, dx):
     
     A_z = A_0*trans
     
-    U_end = (fx*fy)np.fft.ifftn(A_z)
+    U_end = np.fft.fftshift((fx*fy)*np.fft.ifftn(A_z))
     return U_end
 
 """ Función de Difracción Discreta por Transformada de Fresnel usando FFTs"""
@@ -192,10 +192,11 @@ def Fresnel_Transform_FFT(matrix,z,w_length,dx0):
     return U_z
 
 #funcion general para calculo de la difraccion
-def Diffraction(image, dx, z, w_length, type = "FFT"):
+def Diffraction(image, z, w_length, dx,type = "FFT"):
   N = np.shape(image)[0] 
   param = N*(dx**2)/w_length
   if z >= param:
+    print("Tipo: Fresnel, parámetro: ", param)
     if type == "FFT":
       result = Fresnel_Transform_FFT(image,z,w_length,dx)
     elif type == "DFT": 
@@ -203,6 +204,7 @@ def Diffraction(image, dx, z, w_length, type = "FFT"):
     else:
       result = "ERROR, tipo equívocado"
   elif z < param:
+    print("Tipo: Espectro Angular, parámetro: ", param)
     if type == "FFT":
       result = Angular_Spectrum_FFT(image,z,w_length,dx)
     elif type == "DFT": 

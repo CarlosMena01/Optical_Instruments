@@ -8,6 +8,7 @@ um = 1e-6
 mm = 1e-3
 m = 1
 
+
 #Función para gráficar matrices complejas 
 def Complex_Plot(matrix,kind,log,axs,fig = 0, colbar = False):
   #matrix: matriz a gráficar
@@ -129,13 +130,13 @@ def Fresnel_Transform_DFT(matrix,z,w_length,dx0):
     return U_z
 
 """ Función de Difracción Discreta por Espectro Angular usando FFTs"""
-def Angular_Spectrum_FFT(T, dx, dy, z, wave_length):
-    #T_f := Transmitancia que entra al sistema
-    #dx,dy := Dimención del espació discreto
-    #z_f := Distancia a propagar
+def Angular_Spectrum_FFT(T, z, wave_length, dx):
+    #T := Transmitancia que entra al sistema
+    #dx := Dimención del espació discreto
+    #z := Distancia a propagar
     #wave_length := longitud de onda
     
-    A_0 = (dx*dy)*np.fft.fftshift(np.fft.fftn(T))
+    A_0 = (dx**2)*np.fft.fftshift(np.fft.fftn(T))
     
     N,M = np.shape(T)
     #print("M: ",M, "N: ", N)
@@ -144,7 +145,7 @@ def Angular_Spectrum_FFT(T, dx, dy, z, wave_length):
     X,Y = np.meshgrid(x,y)
     
     fx = X*(1/(M*dx))
-    fy = Y*(1/(N*dy))
+    fy = Y*(1/(N*dx))
     
     k = 2*np.pi/wave_length
     
@@ -154,6 +155,7 @@ def Angular_Spectrum_FFT(T, dx, dy, z, wave_length):
     
     U_end = (fx*fy)np.fft.ifftn(A_z)
     return U_end
+
 """ Función de Difracción Discreta por Transformada de Fresnel usando FFTs"""
 def Fresnel_Transform_FFT(matrix,z,w_length,dx0):
     # matrix es la representación discreta de la imagen o función 
@@ -188,3 +190,24 @@ def Fresnel_Transform_FFT(matrix,z,w_length,dx0):
     #Se aplican las fases esféricas de salida y se obtiene el campo difractado a un distancia z
     U_z=U_2prima*(np.exp(1j*k*z)/(w_length*z))*np.exp((1j*k/(2*z))*((dx*n)**2+(dx*m)**2))
     return U_z
+
+#funcion general para calculo de la difraccion
+def Diffraction(image, dx, z, w_length, type = "FFT"):
+  N = np.shape(image)[0] 
+  param = N*(dx**2)/w_length
+  if z >= param:
+    if type == "FFT":
+      result = Fresnel_Transform_FFT(image,z,w_length,dx)
+    elif type == "DFT": 
+      result = Fresnel_Transform_DFT(image,z,w_length,dx)
+    else:
+      result = "ERROR, tipo equívocado"
+  elif z < param:
+    if type == "FFT":
+      result = Angular_Spectrum_FFT(image,z,w_length,dx)
+    elif type == "DFT": 
+      result = Angular_Spectrum_DFT(image,z,w_length,dx)
+    else:
+      result = "ERROR, tipo equívocado"
+  return result
+

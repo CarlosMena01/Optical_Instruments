@@ -126,7 +126,7 @@ def Fresnel_Transform_DFT(matrix,z,w_length,dx0):
     n,m=np.meshgrid(x,y)
 
     #Se aplican las fases esféricas de salida y se obtiene el campo difractado a un distancia z
-    U_z=U_2prima*(np.exp(1j*k*z)/(w_length*z))*np.exp((1j*k/(2*z))*((dx*n)**2+(dx*m)**2))
+    U_z=U_2prima*(np.exp(1j*k*z)/(1j*w_length*z))*np.exp((1j*k/(2*z))*((dx*n)**2+(dx*m)**2))
     return U_z
 
 """ Función de Difracción Discreta por Espectro Angular usando FFTs"""
@@ -136,7 +136,7 @@ def Angular_Spectrum_FFT(T, z, wave_length, dx):
     #z := Distancia a propagar
     #wave_length := longitud de onda
     
-    A_0 = (dx**2)*(np.fft.fftn(T))
+    A_0 = (dx**2)*(np.fft.fftshift(np.fft.fftn(T)))
     
     N,M = np.shape(T)
 
@@ -152,8 +152,8 @@ def Angular_Spectrum_FFT(T, z, wave_length, dx):
     trans = np.exp(1j*k*z*np.sqrt(1-(wave_length**2)*(fx**2 + fy**2)))
     
     A_z = A_0*trans
-    
-    U_end = np.fft.fftshift((fx*fy)*np.fft.ifftn(A_z))
+    df=1/(N*dx)
+    U_end = (df**2)*np.fft.ifftn(A_z)
     return U_end
 
 """ Función de Difracción Discreta por Transformada de Fresnel usando FFTs"""
@@ -179,7 +179,7 @@ def Fresnel_Transform_FFT(matrix,z,w_length,dx0):
     U_prima=matrix*np.exp((1j*k/(2*z))*((dx0*n0)**2+(dx0*m0)**2))
 
     #Se calcula la transformada de Fourier de la función imediatamente anterior
-    U_2prima= np.fft.fftshift(np.fft.fft(U_prima))
+    U_2prima= np.fft.fftshift(np.fft.fftn(U_prima))
     U_2prima=(dx**2)*U_2prima
 
     #Se definen las coordenadas del plano de salida con el fin de aplicar las fases esféricas de salida
@@ -188,7 +188,7 @@ def Fresnel_Transform_FFT(matrix,z,w_length,dx0):
     n,m=np.meshgrid(x,y)
 
     #Se aplican las fases esféricas de salida y se obtiene el campo difractado a un distancia z
-    U_z=U_2prima*(np.exp(1j*k*z)/(w_length*z))*np.exp((1j*k/(2*z))*((dx*n)**2+(dx*m)**2))
+    U_z=U_2prima*(np.exp(1j*k*z)/(1j*w_length*z))*np.exp((1j*k/(2*z))*((dx*n)**2+(dx*m)**2))
     return U_z
 
 #funcion general para calculo de la difraccion

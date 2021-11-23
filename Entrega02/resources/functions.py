@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import cv2
+import time
 
 #Definimos unidades
 nm = 1e-9
@@ -8,7 +9,14 @@ um = 1e-6
 mm = 1e-3
 m = 1
 
-
+#Función para crear regillas circulares
+def Mask_Circle(N):
+  #N dimensión de la matriz
+  circ_aperture=np.zeros((N,N),dtype="uint8")
+  coordy=int(np.shape(circ_aperture)[0]/2)
+  coordx=int(np.shape(circ_aperture)[1]/2)
+  cv2.circle(circ_aperture,(coordx,coordy),150,1,-1)
+  return circ_aperture
 #Función para gráficar matrices complejas 
 def Complex_Plot(matrix,kind,log,axs,fig = 0, colbar = False):
   #matrix: matriz a gráficar

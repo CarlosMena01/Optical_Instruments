@@ -41,30 +41,30 @@ times1_DFT = []
 times2_FFT = []
 times2_DFT = []
 Ns = []
-for N in range(350, 700,2):
+for N in range(300, 700,2):
     ini1_FFT = time.time()
-    Angular_Spectrum_FFT(Mask_Circle(N,150), zAS, w_length, dx)
+    Angular_Spectrum_FFT(Mask_Circle(N,100), zAS, w_length, dx)
     end1_FFT = time.time()
     times1_FFT.append(end1_FFT-ini1_FFT)
     ini1_DFT = time.time()
-    Angular_Spectrum_DFT(Mask_Circle(N,150), zAS, w_length, dx)
+    Angular_Spectrum_DFT(Mask_Circle(N,100), zAS, w_length, dx)
     end1_DFT = time.time()
     times1_DFT.append(end1_DFT-ini1_DFT)
     ini2_FFT = time.time()
-    Fresnel_Transform_FFT(Mask_Circle(N,150), zF, w_length, dx)
+    Fresnel_Transform_FFT(Mask_Circle(N,100), zF, w_length, dx)
     end2_FFT = time.time()
     times2_FFT.append(end2_FFT-ini2_FFT)
     ini2_DFT = time.time()
-    Fresnel_Transform_DFT(Mask_Circle(N,150), zF, w_length, dx)
+    Fresnel_Transform_DFT(Mask_Circle(N,100), zF, w_length, dx)
     end2_DFT = time.time()
     times2_DFT.append(end2_DFT-ini2_DFT)
-    Ns.append(N)
+    Ns.append(N/100)
 
 fig, axs = plt.subplots(1, 2, sharey=True)
 axs[0].plot(Ns,times1_FFT, label = "FFT")
 axs[0].plot(Ns,times1_DFT, label = "DFT")
-axs[0].set_title("Espectro angular a 60mm")
-axs[0].set_xlabel("Tamaño de la imagen (N)")
+axs[0].set_title("Espectro angular a 100mm")
+axs[0].set_xlabel("Tamaño de la imagen (mm)")
 axs[0].set_ylabel("Tiempo de cálculo (s)")
 axs[0].legend()
 

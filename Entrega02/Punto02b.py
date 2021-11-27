@@ -27,4 +27,5 @@ Complex_Plot(U_donut-U_donut_babinet,"A",0,axs[2],fig, colbar= True)
 axs[0].set_title("Patrón Original")
 axs[1].set_title("Patrón Calculado con Babinet")
 axs[2].set_title("Resta")
+
 plt.show()

@@ -10,13 +10,22 @@ mm = 1e-3
 m = 1
 
 #Función para crear regillas circulares
-def Mask_Circle(N):
+def Mask_Circle(N,r,kind='A'):
   #N dimensión de la matriz
-  circ_aperture=np.zeros((N,N),dtype="uint8")
-  coordy=int(np.shape(circ_aperture)[0]/2)
-  coordx=int(np.shape(circ_aperture)[1]/2)
-  cv2.circle(circ_aperture,(coordx,coordy),150,1,-1)
-  return circ_aperture
+  #r es el radio del circulo (en píxeles)
+  #kind: 'A' si es una apertura, 'O' si es un obstáculo
+  if (kind=='A'):
+    circ_aperture=np.zeros((N,N),dtype="uint8")
+    coordy=int(np.shape(circ_aperture)[0]/2)
+    coordx=int(np.shape(circ_aperture)[1]/2)
+    cv2.circle(circ_aperture,(coordx,coordy),r,1,-1)
+    return circ_aperture
+  elif (kind=='O'):
+    circ_obstacle=np.ones((N,N),dtype="uint8")
+    coordy=int(np.shape(circ_obstacle)[0]/2)
+    coordx=int(np.shape(circ_obstacle)[1]/2)
+    cv2.circle(circ_obstacle,(coordx,coordy),r,0,-1)
+    return circ_obstacle
 #Función para gráficar matrices complejas 
 def Complex_Plot(matrix,kind,log,axs,fig = 0, colbar = False):
   #matrix: matriz a gráficar

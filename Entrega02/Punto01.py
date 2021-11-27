@@ -7,7 +7,7 @@ from resources.functions import *
     con luz de 650nm (ir al documento donde se compara el resultado con el resultado real) """
 
 #Se crea computacionalmente la apertura circular (el diámetro se acomoda con las dimensiones de muestreo)
-circ_aperture= Mask_Circle(500)
+circ_aperture= Mask_Circle(500,150)
 
 #Se definen los parámetros
 zF = 300*mm
@@ -41,21 +41,21 @@ times1_DFT = []
 times2_FFT = []
 times2_DFT = []
 Ns = []
-for N in range(100, 700,2):
+for N in range(350, 700,2):
     ini1_FFT = time.time()
-    Angular_Spectrum_FFT(Mask_Circle(N), zAS, w_length, dx)
+    Angular_Spectrum_FFT(Mask_Circle(N,150), zAS, w_length, dx)
     end1_FFT = time.time()
     times1_FFT.append(end1_FFT-ini1_FFT)
     ini1_DFT = time.time()
-    Angular_Spectrum_DFT(Mask_Circle(N), zAS, w_length, dx)
+    Angular_Spectrum_DFT(Mask_Circle(N,150), zAS, w_length, dx)
     end1_DFT = time.time()
     times1_DFT.append(end1_DFT-ini1_DFT)
     ini2_FFT = time.time()
-    Fresnel_Transform_FFT(Mask_Circle(N), zF, w_length, dx)
+    Fresnel_Transform_FFT(Mask_Circle(N,150), zF, w_length, dx)
     end2_FFT = time.time()
     times2_FFT.append(end2_FFT-ini2_FFT)
     ini2_DFT = time.time()
-    Fresnel_Transform_DFT(Mask_Circle(N), zF, w_length, dx)
+    Fresnel_Transform_DFT(Mask_Circle(N,150), zF, w_length, dx)
     end2_DFT = time.time()
     times2_DFT.append(end2_DFT-ini2_DFT)
     Ns.append(N)

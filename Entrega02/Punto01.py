@@ -7,12 +7,12 @@ from resources.functions import *
     con luz de 650nm (ir al documento donde se compara el resultado con el resultado real) """
 
 #Se crea computacionalmente la apertura circular (el diámetro se acomoda con las dimensiones de muestreo)
-circ_aperture= Mask_Circle(500,150)
+circ_aperture= Mask_Circle(700,100)
 
 #Se definen los parámetros
 zF = 300*mm
-zAS = 60*mm
-w_length = 650*nm
+zAS = 100*mm
+w_length = 633*nm
 dx = 10*um
 
 #Definimos los patrones de difracción para cada método
@@ -24,9 +24,9 @@ U_F_DFT = Fresnel_Transform_DFT(circ_aperture, zF, w_length, dx)
 #Gráficamos
 fig, axs = plt.subplots(2, 2, sharey=True)
 Complex_Plot(U_AS_FFT,"A",0,axs[0][0], fig, True)
-axs[0][0].set_title("Espectro ángular FFT a 60mm")
+axs[0][0].set_title("Espectro ángular FFT a 100mm")
 Complex_Plot(U_AS_DFT,"A",0,axs[0][1], fig, True)
-axs[0][1].set_title("Espectro ángular DFT a 60mm")
+axs[0][1].set_title("Espectro ángular DFT a 100mm")
 Complex_Plot(U_F_FFT,"A",0,axs[1][0], fig, True)
 axs[1][0].set_title("Transformada de Fresnel FFT a 300mm")
 Complex_Plot(U_F_DFT,"A",0,axs[1][1], fig, True)

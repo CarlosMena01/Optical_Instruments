@@ -71,7 +71,7 @@ axs[0].legend()
 axs[1].plot(Ns,times2_FFT, label = "FFT")
 axs[1].plot(Ns,times2_DFT, label = "DFT")
 axs[1].set_title("Transformada de Fresnel a 300mm")
-axs[1].set_xlabel("Tamaño de la imagen (N)")
+axs[1].set_xlabel("Tamaño de la imagen (mm)")
 axs[1].set_ylabel("Tiempo de cálculo (s)")
 axs[1].legend()
 

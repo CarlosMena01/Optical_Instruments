@@ -5,7 +5,7 @@ from resources.functions import *
 N = 600 #Tamaño de la imagen
 dx = 10*um #Tamaño de pixel
 w_length = 633*nm #Longitud de onda
-r = 100 #píxeles
+r = 25 #píxeles
 
 #Calculamos la transmitancia
 image = Mask_Circle(N, r, kind= "O")

@@ -2,10 +2,10 @@
 from resources.functions import *
 
 #Parámetros del sistema
-N = 600 #Tamaño de la imagen
+N = 300 #Tamaño de la imagen
 dx = 10*um #Tamaño de pixel
-w_length = 650*nm #Longitud de onda
-r = 100 #píxeles
+w_length = 633*nm #Longitud de onda
+r = 25 #píxeles
 
 #Calculamos la transmitancia
 image = Mask_Circle(N, r, kind= "O")
@@ -13,43 +13,41 @@ image = Mask_Circle(N, r, kind= "O")
 center = []
 zs = []
 #Hacemos el barrido de la intensidad del campo en el eje óptico para diferentes posiciones axiales
-for z in range(1500,4000,1):
-    zs.append(z*dx)
+for z in range(0,3000,1):
+    zs.append(z/100)
     mat = Diffraction(image,z*dx,w_length,dx)
     center.append(np.abs(mat[int(N/2)][int(N/2)]))
 #Gráficamos
-fig1, axs = plt.subplots()
-plt.plot(zs,center)
+fig1, axs = plt.subplots(1,1)
+axs.plot(zs,center)
+axs.set_xlabel('Distancia de Propagación (mm)')
+axs.set_ylabel('Amplitud del Campo Difractado')
 
+#Se grafica la amplitud del campo a lo largo de una línea horizontal que pasa por el centro para diferentes posiciones axiales
+#escogidas según la gráfica anterior
 
-fig2, axs = plt.subplots(2,5,sharey=True,sharex=True)
+fig2, axs = plt.subplots(2,3,sharey=True,sharex=True)
 patterns=[]
-for j in range(2500,3500,100):
+for j in range(500,1100,100):
     patterns.append(Diffraction(image,j*dx,w_length,dx))
-axs[0][0].plot(range(0,600),np.abs(patterns[0][300]))
-axs[0][1].plot(range(0,600),np.abs(patterns[1][300]))
-axs[0][2].plot(range(0,600),np.abs(patterns[2][300]))
-axs[0][3].plot(range(0,600),np.abs(patterns[3][300]))
-axs[0][4].plot(range(0,600),np.abs(patterns[4][300]))
-axs[1][0].plot(range(0,600),np.abs(patterns[5][300]))
-axs[1][1].plot(range(0,600),np.abs(patterns[6][300]))
-axs[1][2].plot(range(0,600),np.abs(patterns[7][300]))
-axs[1][3].plot(range(0,600),np.abs(patterns[8][300]))
-axs[1][4].plot(range(0,600),np.abs(patterns[9][300]))
+axs[0][0].plot(range(0,300),np.abs(patterns[0][150]))
+axs[0][1].plot(range(0,300),np.abs(patterns[1][150]))
+axs[0][2].plot(range(0,300),np.abs(patterns[2][150]))
+axs[1][0].plot(range(0,300),np.abs(patterns[3][150]))
+axs[1][1].plot(range(0,300),np.abs(patterns[4][150]))
+axs[1][2].plot(range(0,300),np.abs(patterns[5][150]))
+axs[1][1].set_xlabel('0.01mm/píxel')
 
-axs[0][0].set_title('z=25mm')
-axs[0][1].set_title('z=26mm')
-axs[0][2].set_title('z=27mm')
-axs[0][3].set_title('z=28mm')
-axs[0][4].set_title('z=29mm')
-axs[1][0].set_title('z=30mm')
-axs[1][1].set_title('z=31mm')
-axs[1][2].set_title('z=32mm')
-axs[1][3].set_title('z=33mm')
-axs[1][4].set_title('z=34mm')
+axs[0][0].set_title('z=5mm')
+axs[0][1].set_title('z=6mm')
+axs[0][2].set_title('z=7mm')
+axs[1][0].set_title('z=8mm')
+axs[1][1].set_title('z=9mm')
+axs[1][2].set_title('z=10mm')
 
 
+#Se grafica el patrón de difracción en una posición en la cual es evidente el punto brillante en el centro
 fig3, axs = plt.subplots(1,1)
-Complex_Plot(Diffraction(image,33*mm,w_length,dx),'A',0,axs[0],fig3)
+Complex_Plot(Diffraction(image,25*mm,w_length,dx),'A',0,axs,fig3)
 
 plt.show()

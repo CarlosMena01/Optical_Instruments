@@ -2,8 +2,8 @@
 from resources.functions import *
 
 #Se genera una abertura y un obstáculo circulares, siendo el obstáculo más grande
-aperture=Mask_Circle(600,100)
-obstacle=Mask_Circle(600,150,'O')
+aperture=Mask_Circle(700,100)
+obstacle=Mask_Circle(700,200,'O')
 
 #Se crea un obstáculo en forma de dona a partir de lo anterior
 donut=aperture+obstacle

@@ -2,7 +2,7 @@
 from resources.functions import *
 
 #Parámetros del sistema
-N = 600 #Tamaño de la imagen
+N = 300 #Tamaño de la imagen
 dx = 10*um #Tamaño de pixel
 w_length = 633*nm #Longitud de onda
 r = 25 #píxeles

@@ -9,7 +9,7 @@ um = 1e-6
 mm = 1e-3
 m = 1
 
-#Función para crear regillas circulares
+#Función para crear rejillas circulares
 def Mask_Circle(N,r,kind='A'):
   #N dimensión de la matriz
   #r es el radio del circulo (en píxeles)

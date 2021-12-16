@@ -6,8 +6,9 @@ from resources.functions import *
 root = "resources/"
 filename = "gala.jpg"
 gala = cv2.imread(root + filename, 0)
-plt.imshow(gala)
-plt.show()
+
+print(gala)
+
 #Se grafica el lienzo para determinar el tamaño de los macropixeles
 fig1, axs = plt.subplots(1, 2, sharey=True)
 #Complex_Plot(gala,'A',0,axs[0],fig1)

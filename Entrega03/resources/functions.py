@@ -24,7 +24,7 @@ def Mask_Circle(shape,r,kind='A',coordx=0,coordy=0):
         cv2.circle(circ_aperture,(coordx,coordy),r,1,-1)
         return circ_aperture
     elif (kind=='O'):
-        circ_obstacle=np.ones((N,N),dtype="uint8")
+        circ_obstacle=np.ones(shape,dtype="uint8")
         cv2.circle(circ_obstacle,(coordx,coordy),r,0,-1)
         return circ_obstacle
 
@@ -47,3 +47,22 @@ def Complex_Plot(matrix,kind,log,axs,fig = 0, colbar = False):
   if (colbar):
     fig.colorbar(image, ax = axs)
   return 
+
+  #Función para crear transmitancias con forma de elipse
+def Mask_Ellipse(shape,rx,ry,kind='A'):
+  #shape son las dimensiones de la matriz (2-tupla)
+  #rx es el radio de la elipse en la dirección horizontal
+  #ry es el radio de la elipse en la dirección vertical
+  #kind: 'A' si es una apertura, 'O' si es un obstáculo
+  if (kind=='A'):
+    e_aperture=np.zeros(shape,dtype="uint8")
+    coordy=int(np.shape(e_aperture)[0]/2)
+    coordx=int(np.shape(e_aperture)[1]/2)
+    cv2.ellipse(e_aperture, (coordx,coordy), (rx,ry), 0, 0, 360, 1, -1)
+    return e_aperture
+  elif (kind=='O'):
+    e_obstacle=np.ones(shape,dtype="uint8")
+    coordy=int(np.shape(e_obstacle)[0]/2)
+    coordx=int(np.shape(e_obstacle)[1]/2)
+    cv2.ellipse(e_obstacle, (coordx,coordy), (rx,ry), 0, 0, 360, 0, -1)
+    return e_obstacle

@@ -35,7 +35,7 @@ Hologram_Mean = Hologram - np.mean(Hologram)
 
 #Combinamos ambos métodos 
 Hologram_Mean_Fourier = np.fft.fftshift(np.fft.fftn(Hologram_Mean))
-Hologram_Mean_Filter = np.fft.ifftn(Hologram_Mean_Fourier*Filter1)
+Hologram_Mean_Filter = np.fft.ifftn(Hologram_Mean_Fourier*Filter2)
 
 #Propagamos las imagenes
 z = 73*mm

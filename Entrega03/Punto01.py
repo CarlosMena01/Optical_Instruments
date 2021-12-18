@@ -8,14 +8,10 @@ filename = "gala.jpg"
 gala = cv2.imread(root+filename, 0)
 
 #Se grafica el lienzo para determinar el tamaño de los macropixeles
-fig1, axs = plt.subplots(1, 2, sharey=False)
-Complex_Plot(gala,'A',0,axs[0],fig1)
-axs[0].set_title('(a)')
-axs[0].set_xlabel('1.48mm/píxel')
-Complex_Plot(gala,'A',0,axs[1],fig1)
-axs[1].set_title('(b)')
-axs[1].set_xlabel('1.48mm/píxel')
-
+fig1, axs = plt.subplots( sharey=False)
+Complex_Plot(gala,'A',0,axs,fig1)
+axs.set_xlabel('1.48mm/píxel')
+plt.show()
 
 #Se definen los tamaños de píxel de la imagen y del Plano de Fourier
 dx=dy=1.48*mm
@@ -34,6 +30,7 @@ mask=Mask_Ellipse(np.shape(gala),rx,ry,kind='A')
 #Se grafica la transmitancia
 fig2, axs = plt.subplots(1, 1)
 Complex_Plot(mask,'A',0,axs,fig2)
+plt.show()
 
 #Se hace la transformada de fourier del lienzo, se multiplica por la transmitancia y luego se hace la transformada inversa
 #para obtener la imagen con la resolución definida previamente
@@ -43,7 +40,7 @@ gala_final=(dfx*dfy)*np.fft.ifftn(gala_filtered)
 
 fig3, axs = plt.subplots(1, 1)
 Complex_Plot(gala_final,'A',0,axs,fig3)
-
+plt.show()
 # A continuación se hará el filtrado espacial de frecuencias simulando diferentes distancias de alejamiento, la resolución
 # en cada distancia se calcula teniendo en cuenta que la resolución del ojo humano es de 5 min de arco
 

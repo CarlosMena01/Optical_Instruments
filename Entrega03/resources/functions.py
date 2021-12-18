@@ -33,7 +33,7 @@ def Complex_Plot(matrix,kind,log,axs,fig = 0, colbar = False):
   #matrix: matriz a gráficar
   #kind: I=Intensidad, A=Amplitud, P=Fase
   #log: 1 si se desea escala logarítmica 0 en caso contrario
-
+  plt.set_cmap('gist_gray')
   if (kind=='I'):
     matrix_to_plot=np.abs(matrix)**2
   elif (kind=='A'):

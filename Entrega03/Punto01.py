@@ -5,7 +5,7 @@ from resources.functions import *
 #Definimos los parametros y la imagen 
 root = "resources/"
 filename = "gala.jpg"
-gala = cv2.imread('gala.jpg', 0)
+gala = cv2.imread(root+filename, 0)
 
 #Se grafica el lienzo para determinar el tamaño de los macropixeles
 fig1, axs = plt.subplots(1, 2, sharey=False)

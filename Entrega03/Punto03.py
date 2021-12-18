@@ -13,12 +13,12 @@ dx = (6513/shape[0])*um
 Hologram_Fourier = np.fft.fftshift(np.fft.fftn(Hologram))
 #Definimos las condiciones para la primer gráfica
 fig, axs = plt.subplots(1, 2, sharey=True)
-Complex_Plot(Hologram,'I',0,axs[0], fig)
-Complex_Plot(Hologram_Fourier,'I',1,axs[1], fig)
+Complex_Plot(Hologram,'A',0,axs[0], fig)
+Complex_Plot(Hologram_Fourier,'A',1,axs[1], fig)
 axs[0].set_title("a) Holograma")
 axs[0].set_xlabel("{} um/pixel".format(round(dx/um,2)))
 axs[1].set_title("b) Espectro de frecuencias \n en escala logaritmica")
-axs[1].set_xlabel("{} um/pixel".format(round(dx/um,2)))
+axs[1].set_xlabel("{} um-1/pixel".format(round(1/(dx/um),2)))
 plt.show()
 
 #Creamos los filtros para eliminar orden cero y orden -1

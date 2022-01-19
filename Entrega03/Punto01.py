@@ -3,7 +3,7 @@ from resources.functions import *
 
 #Se importa la imagen del lienzo
 #Definimos los parametros y la imagen 
-root = "resources/"
+root = "Entrega03/resources/"
 filename = "gala.jpg"
 gala = cv2.imread(root+filename, 0)
 

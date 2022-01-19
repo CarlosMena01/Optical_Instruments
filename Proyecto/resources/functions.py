@@ -49,7 +49,7 @@ def Complex_Plot(matrix,kind,log,axs,fig = 0, colbar = False):
   return 
 
 """ Función de Difracción Discreta por Transformada de Fresnel usando FFTs"""
-def Fresnel_Transform_FFT(matrix,z,w_length,dx0):
+def Fresnel_Transform(matrix,z,w_length,dx0):
     # matrix es la representación discreta de la imagen o función 
     # z es la distancia de propagación (metros)
     # w_length es la longitud de onda (m)
@@ -81,4 +81,47 @@ def Fresnel_Transform_FFT(matrix,z,w_length,dx0):
 
     #Se aplican las fases esféricas de salida y se obtiene el campo difractado a un distancia z
     U_z=U_2prima*(np.exp(1j*k*z)/(1j*w_length*z))*np.exp((1j*k/(2*z))*((dx*n)**2+(dx*m)**2))
+    return U_z,dx
+
+
+
+
+def Inverse_Fresnel_Transform(matrix,z,w_length,dx):
+    # matrix es la representación discreta de la imagen o función 
+    # z es la distancia de propagación (metros)
+    # w_length es la longitud de onda (m)
+    # dx0 es el intervalo de muestreo de la función en el plano de entrada
+
+    #Se define la dimensión de la imagen (solo se utiliza N por ser cuadrada)
+    N=np.shape(matrix)[0]
+
+    #Se calcula dx, el intervalo de muestreo en el plano de salida
+    dx0=(w_length*z)/(dx*N)
+
+    #Se definen las coordenadas del plano de entrada con el fin de aplicar las fases esféricas de entrada
+    k=(2*np.pi)/w_length
+    x0=np.arange(-int(N/2),int(N/2),1)
+    y0=np.arange(-int(N/2),int(N/2),1)
+    n0,m0=np.meshgrid(x0,y0)
+
+    #Se aplican las fases esféricas de entrada
+    U_prima=matrix*np.exp((-1j*k/(2*z))*((dx*n0)**2+(dx*m0)**2))
+
+    #Se calcula la transformada de Fourier de la función imediatamente anterior
+    U_2prima= np.fft.ifftn(U_prima)
+    U_2prima=(dx0**2)*U_2prima
+
+    #Se definen las coordenadas del plano de salida con el fin de aplicar las fases esféricas de salida
+    x=np.arange(-int(N/2),int(N/2),1)
+    y=np.arange(-int(N/2),int(N/2),1)
+    n,m=np.meshgrid(x,y)
+
+    #Se aplican las fases esféricas de salida y se obtiene el campo difractado a un distancia z
+    U_z=U_2prima*(np.exp(1j*k*z)/(1j*w_length*z))*np.exp((-1j*k/(2*z))*((dx0*n)**2+(dx0*m)**2))
     return U_z
+
+def Random_Phase_Plate(shape):
+    #Shape: tupla correspondiente a las dimensiones del plato de fase aleatoria
+    random_nums=np.random.uniform(low=0.0, high=1.0, size=shape)
+    plate=np.exp(1j*2*np.pi*random_nums)
+    return plate

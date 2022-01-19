@@ -4,7 +4,7 @@ w_length=633*nm
 
 bob=cv2.imread('Proyecto/resources/bob.jpg',0)
 Complex_Plot(bob,'A',0, plt)
-beso=cv2.imread('Proyecto/resources/beso.jpg',0)
+beso=cv2.imread('Proyecto/resources/beso.jpg',0)[28:928,200:1100]
 Complex_Plot(beso,'A',0, plt)
 shape=np.shape(bob)
 dx=5*um #tamaño de imagen al rededor de los 0.5cm

@@ -3,7 +3,7 @@ from resources.functions import *
 w_length=633*nm
 
 bob=cv2.imread('resources/bob.jpg',0)
-Complex_Plot(bob,'A',0)
+Complex_Plot(bob,'A',0, plt)
 shape=np.shape(bob)
 dx=5*um #tamaño de imagen al rededor de los 0.5cm
 
@@ -26,4 +26,4 @@ UCCD,dx1,dx2=Object_Arm(bob,r1,r2,0.1,0.2,w_length,dx,1)
 
 UCCD_host, dx3 = Host_Arm(bob, np.pi, 1, 0.3, w_length, dx)
 
-Complex_Plot(UCCD,'I',0)
+Complex_Plot(UCCD,'I',0, plt)

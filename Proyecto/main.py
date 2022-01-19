@@ -21,3 +21,15 @@ UCCDo,dx1,dx2=Object_Arm(bob,r1,r2,0.1,0.2,w_length,dx,1)
 
 fig2, axs = plt.subplots( sharey=False)
 Complex_Plot(UCCDo,'I',0,axs,fig2)
+
+def Host_Arm(host, phase, NDF2, z3, w_length, dx0):
+    imageh = host*(np.sin(phase) + 1j*np.cos(phase))
+    UCCD_host, dxf = Fresnel_Transform(imageh,z3,w_length,dx0)
+
+    return UCCD_host, dxf
+
+UCCD,dx1,dx2=Object_Arm(bob,r1,r2,0.1,0.2,w_length,dx,1)
+
+UCCD_host, dx3 = Host_Arm()
+
+Complex_Plot(UCCD,'I',0)

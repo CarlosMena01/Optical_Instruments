@@ -2,9 +2,8 @@ from resources.functions import *
 
 w_length=633*nm
 
-bob=cv2.imread('bob.jpg',0)
-fig1, axs = plt.subplots( sharey=False)
-Complex_Plot(bob,'A',0,axs,fig1)
+bob=cv2.imread('resources/bob.jpg',0)
+Complex_Plot(bob,'A',0)
 shape=np.shape(bob)
 dx=5*um #tamaño de imagen al rededor de los 0.5cm
 
@@ -23,13 +22,13 @@ fig2, axs = plt.subplots( sharey=False)
 Complex_Plot(UCCDo,'I',0,axs,fig2)
 
 def Host_Arm(host, phase, NDF2, z3, w_length, dx0):
-    imageh = host*(np.sin(phase) + 1j*np.cos(phase))
+    imageh = NDF2*host*(np.sin(phase) + 1j*np.cos(phase))
     UCCD_host, dxf = Fresnel_Transform(imageh,z3,w_length,dx0)
 
     return UCCD_host, dxf
 
 UCCD,dx1,dx2=Object_Arm(bob,r1,r2,0.1,0.2,w_length,dx,1)
 
-UCCD_host, dx3 = Host_Arm()
+UCCD_host, dx3 = Host_Arm(bob, np.pi, 1, 0.3, w_length, dx)
 
 Complex_Plot(UCCD,'I',0)

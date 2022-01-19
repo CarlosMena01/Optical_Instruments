@@ -4,6 +4,8 @@ w_length=633*nm
 
 bob=cv2.imread('resources/bob.jpg',0)
 Complex_Plot(bob,'A',0, plt)
+beso=cv2.imread('resources/beso.jpg',0)
+Complex_Plot(beso,'A',0, plt)
 shape=np.shape(bob)
 dx=5*um #tamaño de imagen al rededor de los 0.5cm
 
@@ -16,7 +18,7 @@ def Object_Arm(image,r1,r2,z1,z2,w_length,dx,C1):
     
     return UCCDo,dx1,dx2
 
-UCCDo,dx1,dx2=Object_Arm(bob,r1,r2,0.1,0.2,w_length,dx,1)
+UCCDo,dx1,dx2=Object_Arm(beso,r1,r2,0.1,0.2,w_length,dx,1)
 
 fig2, axs = plt.subplots( sharey=False)
 Complex_Plot(UCCDo,'I',0,axs,fig2)

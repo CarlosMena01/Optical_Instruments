@@ -66,3 +66,28 @@ plt.show()
 bob_rec=Inverse_Fresnel_Transform(U_host_rec,0.3,w_length,dx_h0)
 Complex_Plot(bob_rec,'A',0,plt)
 plt.show()
+
+############################# DECRYPTION ###########################################3
+
+U_host0,dx_h0= Host_Arm(bob, 0, 1, 0.3, w_length, dx)
+U_host90,dx_h90= Host_Arm(bob, np.pi/2, 1, 0.3, w_length, dx)
+U_host180,dx_h180= Host_Arm(bob, np.pi, 1, 0.3, w_length, dx)
+
+UCCD,dx1,dx2=Object_Arm(beso,r1,r2,0.1,0.2,w_length,dx,1)
+
+I0=np.abs(UCCD+U_host0)**2
+I90=np.abs(UCCD+U_host90)**2
+I180=np.abs(UCCD+U_host180)**2
+
+obj_phase=np.angle(U_host0)-np.arctan2((2*I90-I0-I180),(I180-I0))
+obj_amplitude=np.sqrt(1/2*(I0+I180)-np.abs(U_host0)**2)
+
+object_rec=obj_amplitude*np.exp(1j*obj_phase)
+
+o1=Inverse_Fresnel_Transform(object_rec,0.2,w_length,dx2)
+o1=o1*np.conjugate(r2)
+object_dec=Inverse_Fresnel_Transform(o1,0.1,w_length,dx1)
+object_dec=object_dec*np.conjugate(r1)
+
+Complex_Plot(np.fft.fftshift(object_dec),'A',0,plt)
+plt.show()

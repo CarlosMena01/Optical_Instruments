@@ -125,3 +125,21 @@ def Random_Phase_Plate(shape):
     random_nums=np.random.uniform(low=0.0, high=1.0, size=shape)
     plate=np.exp(1j*2*np.pi*random_nums)
     return plate
+
+def PlaneWave(M,N,angleX,angleY,dx,dy,w_length):
+    Mcenter=int(M/2)
+    Ncenter=int(N/2)
+    
+    x=np.arange(-Mcenter+1,Mcenter+1)
+    y=np.arange(-Ncenter+1,Ncenter+1)
+    
+    X,Y=np.meshgrid(x,y)
+    
+    k=2*np.pi/w_length
+    
+    Ax=np.cos(angleX)
+    Ay=np.cos(angleY)
+    
+    wave=np.exp(1j*k*(Ax*X*dx+Ay*Y*dy))
+    
+    return wave

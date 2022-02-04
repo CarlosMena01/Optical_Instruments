@@ -22,14 +22,14 @@ def Host_Arm(host, phase, z3, w_length, dx0,NDF2):
 
 ##################### Campos iniciales ###########################
 #Host (Bob esponja)
-bob=cv2.imread('resources/bob.jpg',0) #Imagen de Bob esponja (Host)
+bob=cv2.imread('Proyecto/resources/bob.jpg',0) #Imagen de Bob esponja (Host)
 Complex_Plot(bob,'A',0, plt) 
 plt.title("Imagen host (Bob espoja)")
 plt.xlabel("dx = 5um")
 plt.show()
 
 #Imagen principal (El beso)
-beso=cv2.imread('resources/beso.jpg',0)[28:928,200:1100] #Imagen del beso (A encriptar) recortada
+beso=cv2.imread('Proyecto/resources/beso.jpg',0)[28:928,200:1100] #Imagen del beso (A encriptar) recortada
 Complex_Plot(beso,'A',0, plt)
 plt.title("Imagen principal (El beso)")
 plt.xlabel("dx = 5um")
@@ -133,11 +133,17 @@ I90=np.abs(UCCD_End_90)**2
 I180=np.abs(UCCD_End_180)**2
 
 #Ponemos en escala de bits
-I0 = ((I0-I0.min())*255/(I0.max()-I0.min()))//1
-I90 = ((I90-I90.min())*255/(I90.max()-I90.min()))//1
-I180 = ((I180-I180.min())*255/(I180.max()-I180.min()))//1
+#I0 = ((I0-I0.min())*255/(I0.max()-I0.min()))//1
+#I90 = ((I90-I90.min())*255/(I90.max()-I90.min()))//1
+#I180 = ((I180-I180.min())*255/(I180.max()-I180.min()))//1
+I0=I0/(np.max(I0))
+I90=I90/(np.max(I90))
+I180=I180/(np.max(I180))
+
+
 
 paquet = cv2.merge([I0,I90,I180])
 print(paquet)
 plt.imshow(paquet)
+plt.title('RGB Codificado')
 plt.show()

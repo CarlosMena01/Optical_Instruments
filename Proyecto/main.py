@@ -121,3 +121,23 @@ object_dec=object_dec*np.conjugate(r1)
 Complex_Plot(np.fft.fftshift(object_dec),'A',0,plt)
 plt.title("Imagen obtenida al desencriptar")
 plt.show()
+
+
+#Veamos el registro de intensidad con la modificación
+UCCD_End_0 = Inverse_Fresnel_Transform(UCCD+U_host0,z3,w_length,dx_h0)
+UCCD_End_90 = Inverse_Fresnel_Transform(UCCD+U_host90,z3,w_length,dx_h90)
+UCCD_End_180 = Inverse_Fresnel_Transform(UCCD+U_host180,z3,w_length,dx_h180)
+
+I0=np.abs(UCCD_End_0)**2
+I90=np.abs(UCCD_End_90)**2
+I180=np.abs(UCCD_End_180)**2
+
+#Ponemos en escala de bits
+I0 = ((I0-I0.min())*255/(I0.max()-I0.min()))//1
+I90 = ((I90-I90.min())*255/(I90.max()-I90.min()))//1
+I180 = ((I180-I180.min())*255/(I180.max()-I180.min()))//1
+
+paquet = cv2.merge([I0,I90,I180])
+print(paquet)
+plt.imshow(paquet)
+plt.show()

@@ -6,6 +6,7 @@ import cv2
 nm = 1e-9
 um = 1e-6
 mm = 1e-3
+cm = 1e-2
 m = 1
 
 #Función para crear rejillas circulares con diferentes coordenadas y tamaños
@@ -143,3 +144,61 @@ def PlaneWave(M,N,angleX,angleY,dx,dy,w_length):
     wave=np.exp(1j*k*(Ax*X*dx+Ay*Y*dy))
     
     return wave
+
+
+def Fresnel_Bluestein(matrix,z,w_length,d0,df):
+    N=np.shape(matrix)[0]
+    k=(2*np.pi)/w_length
+    
+    x0=np.arange(-int(N/2),int(N/2),1)
+    y0=np.arange(-int(N/2),int(N/2),1)
+    n0,m0=np.meshgrid(x0,y0)
+    
+    di=1/(N*d0)
+    
+    f1=matrix*np.exp((1j*k/(2*z))*(d0*(d0-df)*n0**2+d0*(d0-df)*m0**2))    
+    F1=np.fft.fftn(f1)
+    
+    f2=np.exp((1j*k/(2*z))*(d0*df*n0**2+d0*df*m0**2))
+    F2=np.fft.fftn(f2)
+    
+    x=np.arange(-int(N/2),int(N/2),1)
+    y=np.arange(-int(N/2),int(N/2),1)
+    n,m=np.meshgrid(x,y)
+    
+    u1=np.exp(1j*k*z)/(1j*w_length*z)
+    u2=np.exp((-1j*k/(2*z))*(df*(d0-df)*n**2+df*(d0-df)*m**2))
+    u3=np.fft.ifftn(F1*F2)
+    
+    U_z=u1*u2*u3
+    
+    return np.fft.fftshift(U_z)
+
+def Inverse_Fresnel_Bluestein(matrix,z,w_length,d0,df):
+    N=np.shape(matrix)[0]
+    k=(2*np.pi)/w_length
+    
+    
+    di=1/(N*d0)
+    
+    x0=np.arange(-int(N/2),int(N/2),1)
+    y0=np.arange(-int(N/2),int(N/2),1)
+    n0,m0=np.meshgrid(x0,y0)
+    
+    f1=matrix*np.exp((-1j*k/(2*z))*(df*(df-d0)*n0**2+df*(df-d0)*m0**2))    
+    F1=np.fft.ifftn(f1)
+    
+    f2=np.exp((-1j*k/(2*z))*(df*d0*n0**2+df*d0*m0**2))
+    F2=np.fft.ifftn(f2)
+    
+    x=np.arange(-int(N/2),int(N/2),1)
+    y=np.arange(-int(N/2),int(N/2),1)
+    n,m=np.meshgrid(x,y)
+    
+    u1=np.exp(1j*k*z)/(1j*w_length*z)
+    u2=np.exp((1j*k/(2*z))*(d0*(df-d0)*n**2+df*(df-d0)*m**2))
+    u3=np.fft.fftn(F1*F2)
+    
+    U_z=u1*u2*u3
+    
+    return np.fft.fftshift(U_z)
